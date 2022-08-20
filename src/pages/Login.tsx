@@ -1,14 +1,23 @@
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
+import httpClient from '../_lib/httpClient';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       return;
+    }
+
+    try {
+      const res = await httpClient.post('/api/login', { email, password });
+      setEmail('');
+      setPassword('');
+    } catch (e) {
+      console.warn(e);
     }
   };
 
@@ -21,7 +30,7 @@ const Login = () => {
           placeholder="email"
           data-testid="emailInput"
           value={email}
-          onChange={(e) => setEmail((_) => (_ = e.target.value))}
+          onChange={(e) => setEmail(e.target.value)}
           autoFocus
         />
         <input
@@ -29,7 +38,7 @@ const Login = () => {
           placeholder="password"
           data-testid="passwordInput"
           value={password}
-          onChange={(e) => setPassword((_) => (_ = e.target.value))}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <input type="submit" value="Login" data-testid="loginBtn" />
       </form>
