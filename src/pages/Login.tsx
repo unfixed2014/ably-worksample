@@ -1,10 +1,12 @@
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
-import httpClient from '../_lib/httpClient';
+import { Link, Navigate } from 'react-router-dom';
+import { useDeps } from '../_lib/DepContext';
 
 const Login = () => {
+  const { authService } = useDeps();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -13,9 +15,10 @@ const Login = () => {
     }
 
     try {
-      const res = await httpClient.post('/api/login', { email, password });
+      const res = await authService.requestLogin({ email, password });
       setEmail('');
       setPassword('');
+      setIsAuthorized(true);
     } catch (e) {
       console.warn(e);
     }
@@ -23,8 +26,9 @@ const Login = () => {
 
   return (
     <>
+      {isAuthorized && <Navigate to="/member-info" replace={true} />}
       <h1>Login</h1>
-      <form data-testId="loginForm" onSubmit={handleSubmit}>
+      <form data-testid="loginForm" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="email"
@@ -43,7 +47,7 @@ const Login = () => {
         <input type="submit" value="Login" data-testid="loginBtn" />
       </form>
       <Link to="/password-reset">
-        <button type="button" data-testId="passwordResetBtn">
+        <button type="button" data-testid="passwordResetBtn">
           비밀번호 재설정
         </button>
       </Link>

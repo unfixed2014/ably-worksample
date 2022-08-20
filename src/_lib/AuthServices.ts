@@ -9,12 +9,15 @@ export class AuthService implements IAuthService {
 
   async requestLogin({ email, password }: { email: string; password: string }) {
     const res = await this.client.post('/api/login', { email, password });
-    return res;
+    return res.data;
   }
 }
 
 export class FakeAuthService implements IAuthService {
   async requestLogin({ email, password }: { email: string; password: string }) {
-    return 'hello';
+    if (email === 'ably@dummy.com' && password === '!abc321#$') {
+      return 'toekewjiorjewqoirjioewjoie';
+    }
+    throw new Error('');
   }
 }

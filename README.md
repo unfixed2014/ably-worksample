@@ -85,17 +85,21 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 
 - [x] 이메일과 비밀번호를 입력 할 수 있는 Input Form과 로그인 Button을 배치합니다.
 - [x] 비밀번호 재설정 Button을 배치합니다.
+- [x] 비밀번호 재설정을 클릭하면 [3. 비밀번호 재설정 > A. 인증 코드 발급 요청 페이지] 로 이동합니다.
 - [x] 로그인 Button을 클릭하면 이메일과 비밀번호를 검증 & 처리합니다.
-- [x] [1. 로그인 API] 를 호출하고 응답 결과에 따라 처리합니다.
+- [x] [1. 로그인 API] 를 호출하고 응답이 완료되면 password와 email을 초기화 한다
+- [x] 호출이 성공하면 [2. 회원 정보 조회 페이지] 로 이동합니다.
 - [] 호출에 실패하면 메시지로 알립니다.
-- [] 호출이 성공하면 [2. 회원 정보 조회 페이지] 로 이동합니다.
-- [] 클릭하면 [3. 비밀번호 재설정 > A. 인증 코드 발급 요청 페이지] 로 이동합니다.
 
 ## reference
 
 - 프리티어 및 eslint 사용을 위해서 참고 https://blog.logrocket.com/linting-typescript-using-eslint-and-prettier/
 
 - testing-library
+
   - react-router 테스트하기 https://testing-library.com/docs/example-react-router/
   - user-event https://testing-library.com/docs/user-event/intro
   - user-event를 fireEvent 대신 사용해야 하는 이유 https://ph-fritsche.github.io/blog/post/why-userevent
+
+- context API
+  - contextAPI를 의존성 관리 도구를 사용하기 위해서 참고한 아티클 https://blog.testdouble.com/posts/2021-03-19-react-context-for-dependency-injection-not-state/
