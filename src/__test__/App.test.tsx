@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import App from './App';
-import renderWithRouter from './__test__/utils/renderWithRouter';
+import App from '../App';
+import renderWithRouter from './utils/renderWithRouter';
 
 test('App 컴포넌트가 렌더링 외어야 한다', () => {
   renderWithRouter(<App />);
