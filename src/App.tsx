@@ -4,6 +4,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import About from './pages/About';
 import Home from './pages/Home';
+import ErrorPage404 from './pages/ErrorPage404';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="*" element={<h2>404</h2>} />
+          <Route path="*" element={<ErrorPage404 />} />
         </Routes>
       </header>
     </div>
