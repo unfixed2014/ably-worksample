@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 import { MemoryRouter } from 'react-router';
 
@@ -21,4 +22,16 @@ test('Home으로 가는 Link가 렌더링 되어야 한다', () => {
 
   const linkElement = screen.getByText('Home');
   expect(linkElement).toBeInTheDocument();
+});
+
+test('Home으로 가는 Link를 클릭하면 Home으로 이동한다', async () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>,
+  );
+
+  const user = userEvent.setup();
+  await user.click(screen.getByText('Home'));
+  expect(screen.getByText('homepage')).toBeInTheDocument();
 });

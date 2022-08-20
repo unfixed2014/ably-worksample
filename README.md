@@ -78,3 +78,8 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 ## reference
 
 - 프리티어 및 eslint 사용을 위해서 참고 https://blog.logrocket.com/linting-typescript-using-eslint-and-prettier/
+
+- testing-library
+  - react-router 테스트하기 https://testing-library.com/docs/example-react-router/
+  - user-event https://testing-library.com/docs/user-event/intro
+  - user-event를 fireEvent 대신 사용해야 하는 이유 https://ph-fritsche.github.io/blog/post/why-userevent
