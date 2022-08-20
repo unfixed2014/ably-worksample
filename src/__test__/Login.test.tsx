@@ -40,3 +40,30 @@ test('비밀번호 재설정 버튼을 누를 경우 패스워드 초기화 페�
 
   expect(screen.getByTestId('passwordResetWapper')).toBeInTheDocument();
 });
+
+test('email을 입력할 경우, email input의 value가 변경된다', async () => {
+  const { user } = renderWithRouter(<Login />);
+  const emailInput = screen.getByTestId('emailInput');
+
+  await user.click(emailInput);
+  await user.keyboard('cannalee90@gmail.com');
+
+  expect(emailInput).toHaveValue('cannalee90@gmail.com');
+});
+
+test('password를 입력할 경우, password input value가 변경된다', async () => {
+  const { user } = renderWithRouter(<Login />);
+  const passwordInput = screen.getByTestId('passwordInput');
+
+  await user.click(passwordInput);
+  await user.keyboard('asdf1234');
+
+  expect(passwordInput).toHaveValue('asdf1234');
+});
+
+test('바로 입력할 수 있도록 email에 포커스가 되어있어야 한다', async () => {
+  renderWithRouter(<Login />);
+
+  const emailInput = screen.getByTestId('emailInput');
+  expect(emailInput).toHaveFocus();
+});
