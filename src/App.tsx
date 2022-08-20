@@ -6,6 +6,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import ErrorPage404 from './pages/ErrorPage404';
 import Login from './pages/Login';
+import PasswordReset from './pages/Password-reset';
 
 function App() {
   const loggedIn = useState(false);
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="*" element={<ErrorPage404 />} />
         </Routes>
       </header>
