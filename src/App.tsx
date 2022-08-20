@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
+import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import About from './pages/About';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -10,15 +13,11 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer noopener noreferrer noopener noreferrer"
-          data-testId="https://reactjs.org"
-        >
-          Learn React
-        </a>
+        <Link to="/home">Home</Link>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </header>
     </div>
   );

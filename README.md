@@ -25,7 +25,12 @@ npm run build
 ## 주 사용 라이브러리와 사용 의도
 
 - prettier, eslint
+
   - code formatter로써 prettier 및 eslint를 적용했습니다.
+
+- react-router-dom
+
+  - SPA에서 라우팅을 사용하기 위해서 사용하는 라이브러리
 
 ## 프로젝트 폴더 구조와 설계 의도
 
