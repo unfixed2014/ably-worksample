@@ -14,7 +14,8 @@ function App() {
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer noopener noreferrer noopener noreferrer"
+          data-testId="https://reactjs.org"
         >
           Learn React
         </a>
