@@ -35,3 +35,13 @@ test('Home으로 가는 Link를 클릭하면 Home으로 이동한다', async () 
   await user.click(screen.getByText('Home'));
   expect(screen.getByText('homepage')).toBeInTheDocument();
 });
+
+test('Router에 등록되지 않는 페이지가 나오면 404가 노출되어야 한다', () => {
+  render(
+    <MemoryRouter initialEntries={['/pwoiejrioq']}>
+      <App />
+    </MemoryRouter>,
+  );
+
+  expect(screen.getByText('404')).toBeInTheDocument();
+});

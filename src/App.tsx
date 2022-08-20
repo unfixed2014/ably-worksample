@@ -14,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="*" element={<h2>404</h2>} />
         </Routes>
       </header>
     </div>
