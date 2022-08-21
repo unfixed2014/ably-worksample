@@ -12,7 +12,7 @@ import { screen } from '@testing-library/react';
 import Login from '../pages/Login';
 import renderWithRouter from './utils/renderWithRouter';
 import { Route, Routes } from 'react-router-dom';
-import PasswordReset from '../pages/Password-reset';
+import PasswordReset from '../pages/PasswordReset';
 import MemberInfo from '../pages/MemberInfo';
 
 test('로그인 form이 표시되어야 한다', () => {
