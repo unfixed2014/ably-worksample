@@ -91,8 +91,6 @@ test('로그인 성공할 경우 email과 password이 초기화 되고 memberInf
 
   await user.click(screen.getByTestId('loginBtn'));
 
-  expect(emailInput).toHaveValue('');
-  expect(passwordInput).toHaveValue('');
   expect(screen.getByTestId('memberInfoWrapper')).toBeInTheDocument();
 });
 

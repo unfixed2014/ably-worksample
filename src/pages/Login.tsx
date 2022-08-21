@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
 
 const Login = () => {
@@ -7,7 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -17,10 +17,8 @@ const Login = () => {
 
     try {
       const { accessToken } = await authService.requestLogin({ email, password });
-      setEmail('');
-      setPassword('');
-      setIsAuthorized(true);
       httpClient.setHeader('Authorization', `Bearer ${accessToken}`);
+      navigate('/member-info', { replace: true });
     } catch (err: any) {
       setErrorMessage(err.message);
     }
@@ -28,7 +26,6 @@ const Login = () => {
 
   return (
     <>
-      {isAuthorized && <Navigate to="/member-info" replace={true} />}'
       <div data-testid="loginWrapper">
         <h1>Login</h1>
         {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
