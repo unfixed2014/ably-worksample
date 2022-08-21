@@ -103,19 +103,20 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 ### 로그인 관련 로직들
 
 - [x] 로그인을 성공하면 header에 token을 추가해야한다
-- [] 로그인 되지 않으면 member-info 페이지는 보여지면 안된다
+- [x] 로그인 되지 않으면 member-info 페이지는 보여지면 안된다
+- [x] 로그아웃 되면 헤더의 토큰을 제거한다
 
 ### 회원 정보 조회 페이지
 
-- [] 회원 정보를 보여줄 수 있는 Card를 배치합니다.
-  - [] 이름, 이메일, 프로필 이미지
+- [x] 회원 정보를 보여줄 수 있는 Card를 배치합니다.
+  - [x] 이름, 이메일, 프로필 이미지
 - [x] 페이지 진입 시 [3. 회원 정보 조회 API] 를 호출합니다.
-- [] 호출에 실패하면 [1. 로그인 페이지] 로 이동합니다.
+- [x] 호출에 실패하면 [1. 로그인 페이지] 로 이동합니다.
 - [x] 호출이 성공하면 [3. 회원 정보 조회 API] 의 응답 결과를 화면에 렌더링 합니다.
-- []로그아웃 Button을 배치합니다.
-  - [] 클릭하면 [2. 로그아웃 API] 를 호출하고 응답 결과에 따라 처리합니다.
-  - [] 호출에 실패하면 메시지로 알립니다.
-  - [] 호출이 성공하면 [1. 로그인 페이지] 로 이동합니다.
+- [x]로그아웃 Button을 배치합니다.
+  - [x] 클릭하면 [2. 로그아웃 API] 를 호출하고 응답 결과에 따라 처리합니다.
+  - [x] 호출에 실패하면 메시지로 알립니다.
+  - [x] 호출이 성공하면 [1. 로그인 페이지] 로 이동합니다.
 
 ### 최종 목표
 
@@ -133,6 +134,8 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
   - react-router 테스트하기 https://testing-library.com/docs/example-react-router/
   - user-event https://testing-library.com/docs/user-event/intro
   - user-event를 fireEvent 대신 사용해야 하는 이유 https://ph-fritsche.github.io/blog/post/why-userevent
+  - act warning이 발생한 원인을 찾는데 참고한 문서 https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67
+  - findBy, queryBy, getBy의 차이를 알게된 문서 https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67
 
 - context API
 
