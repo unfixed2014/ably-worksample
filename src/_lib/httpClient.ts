@@ -3,9 +3,20 @@ import axios from 'axios';
 let cachedClient: IHttpClient | null = null;
 
 export interface IHttpClient {
-  get: (url: string) => Promise<any>;
-  post: (url: string, data: any) => Promise<any>;
+  get(url: string): Promise<any>;
+  post(url: string, data: any): Promise<any>;
+  setHeader(key: string, value: string): void;
 }
+
+const FakeHttpClient = (): IHttpClient => {
+  return {
+    get: (url: string) => Promise.resolve({ data: {} }),
+    post: (url: string, data: any) => Promise.resolve({ data: {} }),
+    setHeader: (key: string, value: string) => {
+      console.log('setHeader', key, value);
+    },
+  };
+};
 
 const HttpClient = (): IHttpClient => {
   if (cachedClient) {
@@ -40,9 +51,15 @@ const HttpClient = (): IHttpClient => {
     },
   );
 
-  cachedClient = axiosClient;
+  cachedClient = {
+    get: (url: string) => axiosClient.get(url),
+    post: (url: string, data: any) => axiosClient.post(url, data),
+    setHeader: (key: string, value: string) => {
+      axiosClient.defaults.headers.common[key] = value;
+    },
+  };
 
   return cachedClient;
 };
 
-export default HttpClient;
+export { HttpClient, FakeHttpClient };

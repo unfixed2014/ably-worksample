@@ -6,13 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { DepsProvider } from './_lib/DepContext';
 import { AuthService } from './_lib/AuthServices';
+import { HttpClient } from './_lib/httpClient';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <DepsProvider services={{ authService: new AuthService() }}>
+      <DepsProvider services={{ authService: new AuthService(), httpClient: HttpClient() }}>
         <App />
       </DepsProvider>
     </BrowserRouter>

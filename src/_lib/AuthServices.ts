@@ -1,4 +1,4 @@
-import HttpClient, { IHttpClient } from './httpClient';
+import { HttpClient, IHttpClient } from './httpClient';
 
 export interface IAuthService {
   requestLogin({ email, password }: { email: string; password: string }): Promise<any>;

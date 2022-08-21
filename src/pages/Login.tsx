@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
 
 const Login = () => {
-  const { authService } = useDeps();
+  const { authService, httpClient } = useDeps();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -20,6 +20,7 @@ const Login = () => {
       setEmail('');
       setPassword('');
       setIsAuthorized(true);
+      httpClient.setHeader('Authorization', `Bearer ${accessToken}`);
     } catch (err: any) {
       setErrorMessage(err.message);
     }
