@@ -11,6 +11,11 @@ export interface requestUserInfoResponse {
   lastConnectedAt: Date;
 }
 
+export interface requestEmailVerificationResponse {
+  issueToken: string;
+  remainMillisecond: number;
+}
+
 export interface IAuthService {
   requestLogin({
     email,
@@ -21,6 +26,7 @@ export interface IAuthService {
   }): Promise<requestLoginResponse>;
   requestLogout(): Promise<void>;
   reqeustUserInfo(): Promise<requestUserInfoResponse>;
+  requestEmailVerification(email: string): Promise<requestEmailVerificationResponse>;
 }
 
 export class AuthService implements IAuthService {
@@ -37,6 +43,11 @@ export class AuthService implements IAuthService {
 
   async reqeustUserInfo() {
     const res = await this.client.get('/api/user');
+    return res.data;
+  }
+
+  async requestEmailVerification(email: string): Promise<requestEmailVerificationResponse> {
+    const res = await this.client.get(`/api/reset-password?email=${email}`);
     return res.data;
   }
 }
@@ -62,6 +73,13 @@ export class FakeAuthService implements IAuthService {
       email: 'ably@ably.com',
       profileImage: 'abcde',
       lastConnectedAt: new Date(),
+    });
+  }
+
+  async requestEmailVerification(email: string): Promise<requestEmailVerificationResponse> {
+    return Promise.resolve({
+      issueToken: '171009',
+      remainMillisecond: 1000 * 60 * 3,
     });
   }
 }
