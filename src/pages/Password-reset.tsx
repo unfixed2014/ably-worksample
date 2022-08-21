@@ -1,5 +1,5 @@
 const PasswordReset = () => {
-  return <div data-testId="passwordResetWapper"></div>;
+  return <div data-testid="passwordResetWapper"></div>;
 };
 
 export default PasswordReset;
