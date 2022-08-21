@@ -8,6 +8,7 @@ import ErrorPage404 from './pages/ErrorPage404';
 import Login from './pages/Login';
 import PasswordReset from './pages/PasswordReset';
 import MemberInfo from './pages/MemberInfo';
+import VerifyCode from './pages/VerifyCode';
 
 function App() {
   const loggedIn = useState(false);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/member-info" element={<MemberInfo />} />
+          <Route path="/verify-code" element={<VerifyCode />} />
           <Route path="*" element={<ErrorPage404 />} />
         </Routes>
       </header>
