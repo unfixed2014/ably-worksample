@@ -6,6 +6,7 @@ const PasswordReset = () => {
   const { authService } = useDeps();
   const [email, setEmail] = useState('');
   const [isRequestSuccess, setIsRequestSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -15,7 +16,8 @@ const PasswordReset = () => {
     try {
       const ret = await authService.requestEmailVerification(email);
       setIsRequestSuccess(true);
-    } catch (err) {
+    } catch (err: any) {
+      setErrorMessage(err.message);
       console.log(err);
     }
   };
@@ -24,6 +26,7 @@ const PasswordReset = () => {
     <>
       {isRequestSuccess && <Navigate to="/verify-code" replace={true} />}
       <div data-testid="passwordResetWapper">
+        {errorMessage && <div data-testid="errorMessage">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <input
             type="email"

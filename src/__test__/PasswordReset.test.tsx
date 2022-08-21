@@ -72,3 +72,16 @@ test('다음 button을 클릭하면 이메일을 검증하고, 다음 페이지�
 
   expect(await screen.findByTestId('verifyCodeWrapper')).toBeInTheDocument();
 });
+
+test('다음 button을 클릭해서 검증이 실패하면 에러 메세지를 띄어줍니다', async () => {
+  const authService = new FakeAuthService();
+  authService.requestEmailVerification = jest
+    .fn()
+    .mockRejectedValue({ message: 'error', status: 500 });
+  const { user } = renderWithRouter(PasswordResetWithDep({ authService }));
+
+  await user.keyboard('cannalee90@gmail.com');
+  await user.click(screen.getByTestId('nextBtn'));
+
+  expect((await screen.findByTestId('errorMessage')).textContent).toEqual('error');
+});
