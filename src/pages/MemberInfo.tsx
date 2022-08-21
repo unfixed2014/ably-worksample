@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { requestUserInfoResponse } from '../_lib/AuthServices';
 import { useDeps } from '../_lib/DepContext';
 
 const MemberInfo = () => {
   const { authService, httpClient } = useDeps();
   const [memberInfo, setMemberInfo] = useState<requestUserInfoResponse | null>(null);
-  const [redirectToLoginPage, setRedirectToLoginPage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function reqeustUserInfo() {
@@ -15,7 +15,7 @@ const MemberInfo = () => {
         const res = await authService.reqeustUserInfo();
         setMemberInfo(res);
       } catch (err: any) {
-        setRedirectToLoginPage(true);
+        navigate('/login', { replace: true });
         console.log(err);
       }
     }
@@ -27,7 +27,7 @@ const MemberInfo = () => {
     try {
       await authService.requestLogout();
       httpClient.setHeader('Authorization', '');
-      setRedirectToLoginPage(true);
+      navigate('/login', { replace: true });
     } catch (err: any) {
       setErrorMessage(err.message);
       console.log(err);
@@ -36,7 +36,6 @@ const MemberInfo = () => {
 
   return (
     <>
-      {redirectToLoginPage && <Navigate to="/login" replace={true}></Navigate>}
       <div data-testid="memberInfoWrapper">
         <h1>Member Info</h1>
         {memberInfo && (

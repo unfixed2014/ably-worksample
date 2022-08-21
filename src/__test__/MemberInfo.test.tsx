@@ -10,7 +10,7 @@
 //   - [x] 호출에 실패하면 메시지로 알립니다.
 //   - [x] 호출이 성공하면 [1. 로그인 페이지] 로 이동합니다.
 
-import { cleanup, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
 import MemberInfo from '../pages/MemberInfo';
