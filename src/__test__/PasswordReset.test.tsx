@@ -32,3 +32,13 @@ test('email 입력이 가능한 input버튼과 다음 버튼이 렌더링 되어
   expect(screen.getByTestId('emailInput')).toBeInTheDocument();
   expect(screen.getByTestId('nextBtn')).toBeInTheDocument();
 });
+
+test('email을 입력하면 emailInput 값이 변경되어야 한다', async () => {
+  const { user } = renderWithRouter(<PasswordResetWithRoute />);
+
+  const emailInput = screen.getByTestId('emailInput');
+
+  await user.keyboard('cannalee90@gmail.com');
+
+  expect(emailInput).toHaveValue('cannalee90@gmail.com');
+});
