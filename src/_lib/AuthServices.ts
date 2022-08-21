@@ -16,8 +16,11 @@ export class AuthService implements IAuthService {
 export class FakeAuthService implements IAuthService {
   async requestLogin({ email, password }: { email: string; password: string }) {
     if (email === 'ably@dummy.com' && password === '!abc321#$') {
-      return 'toekewjiorjewqoirjioewjoie';
+      return { accessToken: 'toekewjiorjewqoirjioewjoie' };
     }
-    throw new Error('');
+    return Promise.reject({
+      message: 'invalid email or password',
+      status: '401',
+    });
   }
 }

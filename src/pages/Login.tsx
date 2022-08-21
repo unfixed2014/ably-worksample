@@ -6,6 +6,7 @@ const Login = () => {
   const { authService } = useDeps();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -15,12 +16,12 @@ const Login = () => {
     }
 
     try {
-      const res = await authService.requestLogin({ email, password });
+      const { accessToken } = await authService.requestLogin({ email, password });
       setEmail('');
       setPassword('');
       setIsAuthorized(true);
-    } catch (e) {
-      console.warn(e);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     }
   };
 
@@ -28,6 +29,7 @@ const Login = () => {
     <>
       {isAuthorized && <Navigate to="/member-info" replace={true} />}
       <h1>Login</h1>
+      {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
       <form data-testid="loginForm" onSubmit={handleSubmit}>
         <input
           type="email"

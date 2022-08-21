@@ -98,7 +98,7 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 - [x] 로그인 Button을 클릭하면 이메일과 비밀번호를 검증 & 처리합니다.
 - [x] [1. 로그인 API] 를 호출하고 응답이 완료되면 password와 email을 초기화 한다
 - [x] 호출이 성공하면 [2. 회원 정보 조회 페이지] 로 이동합니다.
-- [] 호출에 실패하면 메시지로 알립니다.
+- [x] 호출에 실패하면 메시지로 알립니다.
 
 ### 로그인 관련 로직들
 

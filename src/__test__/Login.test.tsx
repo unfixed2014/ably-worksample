@@ -6,7 +6,7 @@
 // - [x] 로그인 Button을 클릭하면 이메일과 비밀번호를 검증 & 처리합니다.
 // - [x] [1. 로그인 API] 를 호출하고 응답이 완료되면 password와 email을 초기화 한다
 // - [x] 호출이 성공하면 [2. 회원 정보 조회 페이지] 로 이동합니다.
-// - [] 호출에 실패하면 메시지로 알립니다.
+// - [x] 호출에 실패하면 메시지로 알립니다.
 
 import { screen } from '@testing-library/react';
 import Login from '../pages/Login';
@@ -94,4 +94,23 @@ test('로그인 성공할 경우 email과 password이 초기화 되고 memberInf
   expect(emailInput).toHaveValue('');
   expect(passwordInput).toHaveValue('');
   expect(screen.getByTestId('memberInfoWrapper')).toBeInTheDocument();
+});
+
+test('로그인 실패할 경우 메세지를 보여줘야 한다', async () => {
+  const { user } = renderWithRouter(<Login />);
+
+  const emailInput = screen.getByTestId('emailInput');
+  const passwordInput = screen.getByTestId('passwordInput');
+
+  await user.click(emailInput);
+  await user.keyboard('kangho@gmail.com');
+
+  await user.click(passwordInput);
+  await user.keyboard('123456');
+
+  await user.click(screen.getByTestId('loginBtn'));
+
+  expect(emailInput).toHaveValue('kangho@gmail.com');
+  expect(passwordInput).toHaveValue('123456');
+  expect(screen.getByTestId('errorMessage')).toBeInTheDocument();
 });
