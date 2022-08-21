@@ -4,11 +4,22 @@
 // - [] 호출에 실패하면 메시지로 알립니다.
 // - [] 호출이 성공하면 [B. 인증 코드 검증 페이지] 로 이동합니다.
 
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
+import { Route, Routes } from 'react-router-dom';
 import PasswordReset from '../pages/PasswordReset';
-import { AuthService, FakeAuthService } from '../_lib/AuthServices';
+import VerifyCode from '../pages/VerifyCode';
+import { FakeAuthService } from '../_lib/AuthServices';
 import { defaultProvider, DepsProvider } from '../_lib/DepContext';
 import renderWithRouter from './utils/renderWithRouter';
+
+const PasswordResetWithRoute = () => (
+  <>
+    <Routes>
+      <Route path="/" element={<PasswordReset />}></Route>
+      <Route path="/verify-code" element={<VerifyCode />} />
+    </Routes>
+  </>
+);
 
 const PasswordResetWithDep = (providers = {}) => (
   <DepsProvider
@@ -17,17 +28,17 @@ const PasswordResetWithDep = (providers = {}) => (
       ...providers,
     }}
   >
-    <PasswordReset />
+    <PasswordResetWithRoute />
   </DepsProvider>
 );
 
 test('컴포넌트가 렌더링 되어야 한다.', async () => {
-  renderWithRouter(<PasswordReset />);
+  renderWithRouter(<PasswordResetWithRoute />);
   expect(screen.getByTestId('passwordResetWapper')).toBeInTheDocument();
 });
 
 test('email 입력이 가능한 input버튼과 다음 버튼이 렌더링 되어야 한다', () => {
-  renderWithRouter(<PasswordReset />);
+  renderWithRouter(<PasswordResetWithRoute />);
 
   expect(screen.getByTestId('emailInput')).toBeInTheDocument();
   expect(screen.getByTestId('nextBtn')).toBeInTheDocument();
@@ -41,4 +52,23 @@ test('email을 입력하면 emailInput 값이 변경되어야 한다', async () 
   await user.keyboard('cannalee90@gmail.com');
 
   expect(emailInput).toHaveValue('cannalee90@gmail.com');
+});
+
+test('email이 입력되지 않은 상태면 다음 페이지로 넘어가지 않습니다.', async () => {
+  const authService = new FakeAuthService();
+  const { user } = renderWithRouter(PasswordResetWithDep({ authService }));
+
+  await user.click(screen.getByTestId('nextBtn'));
+
+  expect(await screen.findByTestId('passwordResetWapper')).toBeInTheDocument();
+});
+
+test('다음 button을 클릭하면 이메일을 검증하고, 다음 페이지로 이동합니다', async () => {
+  const authService = new FakeAuthService();
+  const { user } = renderWithRouter(PasswordResetWithDep({ authService }));
+
+  await user.keyboard('cannalee90@gmail.com');
+  await user.click(screen.getByTestId('nextBtn'));
+
+  expect(await screen.findByTestId('verifyCodeWrapper')).toBeInTheDocument();
 });
