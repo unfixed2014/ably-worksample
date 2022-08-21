@@ -28,32 +28,34 @@ const Login = () => {
 
   return (
     <>
-      {isAuthorized && <Navigate to="/member-info" replace={true} />}
-      <h1>Login</h1>
-      {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
-      <form data-testid="loginForm" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="email"
-          data-testid="emailInput"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoFocus
-        />
-        <input
-          type="password"
-          placeholder="password"
-          data-testid="passwordInput"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input type="submit" value="Login" data-testid="loginBtn" />
-      </form>
-      <Link to="/password-reset">
-        <button type="button" data-testid="passwordResetBtn">
-          비밀번호 재설정
-        </button>
-      </Link>
+      {isAuthorized && <Navigate to="/member-info" replace={true} />}'
+      <div data-testid="loginWrapper">
+        <h1>Login</h1>
+        {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
+        <form data-testid="loginForm" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="email"
+            data-testid="emailInput"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoFocus
+          />
+          <input
+            type="password"
+            placeholder="password"
+            data-testid="passwordInput"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input type="submit" value="Login" data-testid="loginBtn" />
+        </form>
+        <Link to="/password-reset">
+          <button type="button" data-testid="passwordResetBtn">
+            비밀번호 재설정
+          </button>
+        </Link>
+      </div>
     </>
   );
 };

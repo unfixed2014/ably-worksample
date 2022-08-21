@@ -6,6 +6,11 @@ interface ServiceProviders {
   httpClient: IHttpClient;
 }
 
+export const defaultProvider: ServiceProviders = {
+  authService: new FakeAuthService(),
+  httpClient: FakeHttpClient(),
+};
+
 const DepsContext = createContext<ServiceProviders>({
   authService: new FakeAuthService(),
   httpClient: FakeHttpClient(),
