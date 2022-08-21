@@ -102,7 +102,7 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 
 ### 로그인 관련 로직들
 
-- [] 로그인을 성공하면 header에 token을 추가해야한다
+- [x] 로그인을 성공하면 header에 token을 추가해야한다
 - [] 로그인 되지 않으면 member-info 페이지는 보여지면 안된다
 
 ### 최종 목표

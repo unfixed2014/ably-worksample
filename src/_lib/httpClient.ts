@@ -10,8 +10,8 @@ export interface IHttpClient {
 
 const FakeHttpClient = (): IHttpClient => {
   return {
-    get: (url: string) => Promise.resolve({ data: {} }),
-    post: (url: string, data: any) => Promise.resolve({ data: {} }),
+    get: (_url: string) => Promise.resolve({ data: {} }),
+    post: (_url: string, _data: any) => Promise.resolve({ data: {} }),
     setHeader: (key: string, value: string) => {
       console.log('setHeader', key, value);
     },
