@@ -16,6 +16,10 @@ export interface requestEmailVerificationResponse {
   remainMillisecond: number;
 }
 
+export interface requestVerifyCodeResponse {
+  confirmToken: string;
+}
+
 export interface IAuthService {
   requestLogin({
     email,
@@ -27,6 +31,11 @@ export interface IAuthService {
   requestLogout(): Promise<void>;
   reqeustUserInfo(): Promise<requestUserInfoResponse>;
   requestEmailVerification(email: string): Promise<requestEmailVerificationResponse>;
+  requestVerifyCode(
+    email: string,
+    authCode: string,
+    issueToken: string,
+  ): Promise<requestVerifyCodeResponse>;
 }
 
 export class AuthService implements IAuthService {
@@ -48,6 +57,15 @@ export class AuthService implements IAuthService {
 
   async requestEmailVerification(email: string): Promise<requestEmailVerificationResponse> {
     const res = await this.client.get(`/api/reset-password?email=${email}`);
+    return res.data;
+  }
+
+  async requestVerifyCode(
+    email: string,
+    authCode: string,
+    issueToken: string,
+  ): Promise<requestVerifyCodeResponse> {
+    const res = await this.client.post('/api/reset-password', { email, authCode, issueToken });
     return res.data;
   }
 }
@@ -76,10 +94,20 @@ export class FakeAuthService implements IAuthService {
     });
   }
 
-  async requestEmailVerification(email: string): Promise<requestEmailVerificationResponse> {
+  async requestEmailVerification(_email: string): Promise<requestEmailVerificationResponse> {
     return Promise.resolve({
       issueToken: '171009',
       remainMillisecond: 1000 * 60 * 3,
     });
+  }
+
+  async requestVerifyCode(
+    _email: string,
+    _authCode: string,
+    _issueToken: string,
+  ): Promise<requestVerifyCodeResponse> {
+    return {
+      confirmToken: '123456',
+    };
   }
 }
