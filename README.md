@@ -74,12 +74,12 @@ npm test
 
 ### reference
 
-- 프리티어 및 eslint 사용을 위해서 참고 https://blog.logrocket.com/linting-typescript-using-eslint-and-prettier/
+- 프리티어 및 eslint 사용을 위해서 참고한 문서입니다. https://blog.logrocket.com/linting-typescript-using-eslint-and-prettier/
 
 - testing-library
 
   - react-router 테스트하기 https://testing-library.com/docs/example-react-router/
-  - user-event https://testing-library.com/docs/user-event/intro
+  - user-event API 참고용 문서 https://testing-library.com/docs/user-event/intro
   - user-event를 fireEvent 대신 사용해야 하는 이유 https://ph-fritsche.github.io/blog/post/why-userevent
   - act warning이 발생한 원인을 찾는데 참고한 문서 https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67
   - findBy, queryBy, getBy의 차이를 알게된 문서 https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67
@@ -91,6 +91,7 @@ npm test
 - React Beta docs
 
   - 리액트에 대한 철학 및 기본적인 정보를 알아보기 위해 참고한 문서 https://beta.reactjs.org/
+  - setInterval을 사용하기 위해서 참고한 문서 https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 
 - error의 타입을 지정하기 위해 참고한 글
   - https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
