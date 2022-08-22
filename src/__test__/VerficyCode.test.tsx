@@ -5,6 +5,7 @@
 // - [x] [5. 인증 코드 검증 API] 를 호출하고 응답 결과에 따라 처리합니다.
 // - [x] 호출에 실패하면 메시지로 알립니다.
 // - [x] 호출이 성공하면 [C. 비밀번호 변경 페이지] 로 이동합니다.
+// - [x] 잘못된 접근일 경우는 메세지를 출력한다.
 
 import { screen } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
@@ -48,7 +49,9 @@ test('VerifyCode 컴포넌트가 보여줘야 한다', () => {
 });
 
 test('인증 코드를 입력할 수 있는 input과 만료시간 counter 다음 버튼을 배치합니다', () => {
-  renderWithRouter(<VerifyCode />);
+  renderWithRouter(<VerifyCode />, {
+    initialEntries: defaultInitialEntries,
+  });
 
   expect(screen.getByTestId('verifyCodeInput')).toBeInTheDocument();
   expect(screen.getByTestId('counter')).toBeInTheDocument();
@@ -56,7 +59,9 @@ test('인증 코드를 입력할 수 있는 input과 만료시간 counter 다음
 });
 
 test('input에 verifyCode를 입력하면 input 값이 변경되어야 합니다', async () => {
-  const { user } = renderWithRouter(<VerifyCode />);
+  const { user } = renderWithRouter(<VerifyCode />, {
+    initialEntries: defaultInitialEntries,
+  });
 
   await user.click(screen.getByTestId('verifyCodeInput'));
   await user.keyboard('123456');
@@ -96,4 +101,12 @@ test('인증 버튼의 값을 넣지 않고 버튼을 에러 메세지가 발생
   await user.click(screen.getByTestId('nextBtn'));
 
   expect(screen.getByTestId('errorMessage')).toHaveTextContent('인증 코드를 입력해주세요.');
+});
+
+test('잘못된 접근일 경우 에러 메세지를 출력한다', () => {
+  renderWithRouter(VerifyCodeWithDep(), {
+    initialEntries: ['/', { pathname: '/' }],
+  });
+
+  expect(screen.getByTestId('errorMessage')).toHaveTextContent('잘못된 접근입니다.');
 });

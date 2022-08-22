@@ -27,6 +27,14 @@ const VerifyCode = () => {
     }
   };
 
+  if (!state) {
+    return (
+      <div data-testid="verifyCodeWrapper">
+        <p data-testid="errorMessage">잘못된 접근입니다.</p>
+      </div>
+    );
+  }
+
   return (
     <div data-testid="verifyCodeWrapper">
       <p data-testid="counter">00:00</p>
