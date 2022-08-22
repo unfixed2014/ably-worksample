@@ -4,11 +4,14 @@ React CRA를 사용해서 프로젝트를 초기 셋팅을 진행했습니다.
 
 https://ably-worksample.vercel.app/login 주소에서 배포된 부분 확인이 가능합니다.
 
+개발 환경은 윈도우 10, nodejs 14.17.3 입니다.
+
 ## 프로젝트 실행 방법
 
 ### 개발 모드로 실행
 
 ```
+npm ci
 npm start
 ```
 
