@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestUserInfoResponse } from '../_lib/AuthServices';
+import { RequestUserInfoResponse } from '../_lib/AuthServices';
 import { useDeps } from '../_lib/DepContext';
 
 const MemberInfo = () => {
   const { authService, httpClient } = useDeps();
-  const [memberInfo, setMemberInfo] = useState<requestUserInfoResponse | null>(null);
+  const [memberInfo, setMemberInfo] = useState<RequestUserInfoResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 

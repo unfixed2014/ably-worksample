@@ -1,26 +1,26 @@
 import { HttpClient, IHttpClient } from './httpClient';
 
-export interface requestLoginResponse {
+export interface RequestLoginResponse {
   accessToken: string;
 }
 
-export interface requestUserInfoResponse {
+export interface RequestUserInfoResponse {
   name: string;
   email: string;
   profileImage: string;
   lastConnectedAt: Date;
 }
 
-export interface requestEmailVerificationResponse {
+export interface RequestEmailVerificationResponse {
   issueToken: string;
   remainMillisecond: number;
 }
 
-export interface requestVerifyCodeResponse {
+export interface RequestVerifyCodeResponse {
   confirmToken: string;
 }
 
-export interface requestPasswordModification {
+export interface RequestPasswordModification {
   email: string;
 }
 
@@ -31,21 +31,21 @@ export interface IAuthService {
   }: {
     email: string;
     password: string;
-  }): Promise<requestLoginResponse>;
+  }): Promise<RequestLoginResponse>;
   requestLogout(): Promise<void>;
-  reqeustUserInfo(): Promise<requestUserInfoResponse>;
-  requestEmailVerification(email: string): Promise<requestEmailVerificationResponse>;
+  reqeustUserInfo(): Promise<RequestUserInfoResponse>;
+  requestEmailVerification(email: string): Promise<RequestEmailVerificationResponse>;
   requestVerifyCode(
     email: string,
     authCode: string,
     issueToken: string,
-  ): Promise<requestVerifyCodeResponse>;
+  ): Promise<RequestVerifyCodeResponse>;
   requestPasswordModification(
     email: string,
     confirmToken: string,
     newPassword: string,
     newPasswordConfirm: string,
-  ): Promise<requestPasswordModification>;
+  ): Promise<RequestPasswordModification>;
 }
 
 export class AuthService implements IAuthService {
@@ -65,7 +65,7 @@ export class AuthService implements IAuthService {
     return res.data;
   }
 
-  async requestEmailVerification(email: string): Promise<requestEmailVerificationResponse> {
+  async requestEmailVerification(email: string): Promise<RequestEmailVerificationResponse> {
     const res = await this.client.get(`/api/reset-password?email=${email}`);
     return res.data;
   }
@@ -74,7 +74,7 @@ export class AuthService implements IAuthService {
     email: string,
     authCode: string,
     issueToken: string,
-  ): Promise<requestVerifyCodeResponse> {
+  ): Promise<RequestVerifyCodeResponse> {
     const res = await this.client.post('/api/reset-password', { email, authCode, issueToken });
     return res.data;
   }
@@ -120,7 +120,7 @@ export class FakeAuthService implements IAuthService {
     });
   }
 
-  async requestEmailVerification(_email: string): Promise<requestEmailVerificationResponse> {
+  async requestEmailVerification(_email: string): Promise<RequestEmailVerificationResponse> {
     return Promise.resolve({
       issueToken: '171009',
       remainMillisecond: 1000 * 60 * 3,
@@ -131,7 +131,7 @@ export class FakeAuthService implements IAuthService {
     _email: string,
     _authCode: string,
     _issueToken: string,
-  ): Promise<requestVerifyCodeResponse> {
+  ): Promise<RequestVerifyCodeResponse> {
     return {
       confirmToken: '123456',
     };
