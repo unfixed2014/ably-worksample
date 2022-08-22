@@ -20,6 +20,10 @@ export interface requestVerifyCodeResponse {
   confirmToken: string;
 }
 
+export interface requestPasswordModification {
+  email: string;
+}
+
 export interface IAuthService {
   requestLogin({
     email,
@@ -36,6 +40,12 @@ export interface IAuthService {
     authCode: string,
     issueToken: string,
   ): Promise<requestVerifyCodeResponse>;
+  requestPasswordModification(
+    email: string,
+    confirmToken: string,
+    newPassword: string,
+    newPasswordConfirm: string,
+  ): Promise<requestPasswordModification>;
 }
 
 export class AuthService implements IAuthService {
@@ -66,6 +76,22 @@ export class AuthService implements IAuthService {
     issueToken: string,
   ): Promise<requestVerifyCodeResponse> {
     const res = await this.client.post('/api/reset-password', { email, authCode, issueToken });
+    return res.data;
+  }
+
+  async reqeustPasswordModification(
+    email: string,
+    confirmToken: string,
+    newPassword: string,
+    newPasswordConfirm: string,
+  ) {
+    const res = await this.client.patch('/api/reset-password', {
+      email,
+      confirmToken,
+      newPassword,
+      newPasswordConfirm,
+    });
+
     return res.data;
   }
 }
@@ -108,6 +134,17 @@ export class FakeAuthService implements IAuthService {
   ): Promise<requestVerifyCodeResponse> {
     return {
       confirmToken: '123456',
+    };
+  }
+
+  async reqeustPasswordModification(
+    email: string,
+    _confirmToken: string,
+    _newPassword: string,
+    _newPasswordConfirm: string,
+  ) {
+    return {
+      email,
     };
   }
 }
