@@ -1,7 +1,10 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { RequestEmailVerificationResponse } from '../_lib/AuthServices';
 import { useDeps } from '../_lib/DepContext';
 import { isErrorWithMessage } from '../_lib/Error';
+
+type LocationState = RequestEmailVerificationResponse & { email: string };
 
 const VerifyCode = () => {
   const { state } = useLocation();
@@ -75,7 +78,7 @@ const VerifyCode = () => {
     );
   }
 
-  const timeInSecond = Math.floor((state as any).remainMillisecond) / 1000 - count;
+  const timeInSecond = Math.floor((state as LocationState).remainMillisecond) / 1000 - count;
   const displaySecond = padding(Math.floor(timeInSecond % 60));
   const displayMinute = padding(Math.floor(timeInSecond / 60));
 
