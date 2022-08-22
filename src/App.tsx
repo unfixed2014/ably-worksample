@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import About from './pages/About';
 import Home from './pages/Home';
