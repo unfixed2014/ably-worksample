@@ -1,8 +1,18 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ModifyPassword = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const { state } = useLocation();
+
+  if (!state) {
+    return (
+      <div data-testid="modifyPassword">
+        <p data-testid="errorMessage">잘못된 접근입니다.</p>
+      </div>
+    );
+  }
 
   return (
     <div data-testid="modifyPassword">
