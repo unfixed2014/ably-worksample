@@ -18,6 +18,10 @@ const ModifyPassword = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!password) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+    }
+
     if (password !== passwordConfirm) {
       setErrorMessage('비밀번호가 일치하지 않습니다.');
       return;
