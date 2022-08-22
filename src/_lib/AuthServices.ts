@@ -79,7 +79,7 @@ export class AuthService implements IAuthService {
     return res.data;
   }
 
-  async reqeustPasswordModification(
+  async requestPasswordModification(
     email: string,
     confirmToken: string,
     newPassword: string,
@@ -137,7 +137,7 @@ export class FakeAuthService implements IAuthService {
     };
   }
 
-  async reqeustPasswordModification(
+  async requestPasswordModification(
     email: string,
     _confirmToken: string,
     _newPassword: string,

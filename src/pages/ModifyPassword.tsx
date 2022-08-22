@@ -1,11 +1,14 @@
 import { FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useDeps } from '../_lib/DepContext';
 
 const ModifyPassword = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const { state } = useLocation();
+  const { authService } = useDeps();
 
   if (!state) {
     return (
@@ -26,10 +29,19 @@ const ModifyPassword = () => {
       setErrorMessage('비밀번호가 일치하지 않습니다.');
       return;
     }
+
+    try {
+      const { confirmToken, email } = state as any;
+      await authService.requestPasswordModification(email, confirmToken, password, passwordConfirm);
+      setSuccessMessage('비밀번호가 변경되었습니다.');
+    } catch (err: any) {
+      setErrorMessage(err.message);
+    }
   };
 
   return (
     <div data-testid="modifyPassword" onSubmit={handleSubmit}>
+      {successMessage && <p data-testid="successMessage">{successMessage}</p>}
       {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
       <form>
         <input
