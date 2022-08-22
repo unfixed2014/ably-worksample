@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ModifyPassword = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { state } = useLocation();
 
   if (!state) {
@@ -14,8 +15,18 @@ const ModifyPassword = () => {
     );
   }
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+  };
+
   return (
-    <div data-testid="modifyPassword">
+    <div data-testid="modifyPassword" onSubmit={handleSubmit}>
+      {errorMessage && <p data-testid="errorMessage">{errorMessage}</p>}
       <form>
         <input
           type="password"

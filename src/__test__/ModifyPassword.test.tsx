@@ -2,7 +2,7 @@
 // - [x] 새로운 비밀번호, 새로운 비밀번호 확인 Input Form과 비밀번호 변경하기 Button을 배치합니다.
 // - [x] 새로운 비밀번호, 새로운 비밀번호 확인 input 값이 변경되어야 합니다
 // - [x] 잘못된 접근일 경우 메세지를 출력합니다.
-// - [] 새로운 비밀번호가 일치하지 않을 경우 에러 메세지를 보여줘야 합니다
+// - [x] 새로운 비밀번호가 일치하지 않고 변경하기 버튼을 누르면 에러 메세지를 보여줘야 합니다
 // - [] 각각의 비밀번호가 없을 경우 에러 메세지를 보여줘야 합니다.
 // - [] 비밀번호 변경하기 Button을 클릭하면 새로운 비밀번호와 새로운 비밀번호 확인을 검증합니다.
 // - [] 호출이 성공하면 메세지로 알려줍니다
@@ -68,4 +68,21 @@ test('잘못된 접근인 경우 메세지를 출력합니다', async () => {
   });
 
   expect(screen.getByTestId('errorMessage')).toHaveTextContent('잘못된 접근입니다.');
+});
+
+test('비밀번호, 비밀번호 확인의 값이 다를 경우 에러 메세지를 보여줘야 합니다', async () => {
+  const { user } = renderWithRouter(<ModifyPassword />, { initialEntries: defaultInitialEntries });
+
+  const passwordInput = screen.getByTestId('passwordInput');
+  const passwordConfirmInput = screen.getByTestId('passwordConfirmInput');
+
+  await user.click(passwordInput);
+  await user.keyboard('12345678');
+
+  await user.click(passwordConfirmInput);
+  await user.keyboard('1234');
+
+  await user.click(screen.getByTestId('submitBtn'));
+
+  expect(screen.getByTestId('errorMessage')).toHaveTextContent('비밀번호가 일치하지 않습니다.');
 });
