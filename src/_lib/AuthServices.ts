@@ -51,22 +51,30 @@ export interface IAuthService {
 export class AuthService implements IAuthService {
   constructor(private client: IHttpClient = HttpClient()) {}
 
-  async requestLogin({ email, password }: { email: string; password: string }) {
-    const res = await this.client.post('/api/login', { email, password });
+  async requestLogin({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<RequestLoginResponse> {
+    const res = await this.client.post<RequestLoginResponse>('/api/login', { email, password });
     return res.data;
   }
 
-  async requestLogout() {
-    await this.client.post('/api/logout', {});
+  async requestLogout(): Promise<void> {
+    await this.client.post<void>('/api/logout', {});
   }
 
   async reqeustUserInfo() {
-    const res = await this.client.get('/api/user');
+    const res = await this.client.get<RequestUserInfoResponse>('/api/user');
     return res.data;
   }
 
   async requestEmailVerification(email: string): Promise<RequestEmailVerificationResponse> {
-    const res = await this.client.get(`/api/reset-password?email=${email}`);
+    const res = await this.client.get<RequestEmailVerificationResponse>(
+      `/api/reset-password?email=${email}`,
+    );
     return res.data;
   }
 
@@ -75,7 +83,11 @@ export class AuthService implements IAuthService {
     authCode: string,
     issueToken: string,
   ): Promise<RequestVerifyCodeResponse> {
-    const res = await this.client.post('/api/reset-password', { email, authCode, issueToken });
+    const res = await this.client.post<RequestVerifyCodeResponse>('/api/reset-password', {
+      email,
+      authCode,
+      issueToken,
+    });
     return res.data;
   }
 
@@ -84,8 +96,8 @@ export class AuthService implements IAuthService {
     confirmToken: string,
     newPassword: string,
     newPasswordConfirm: string,
-  ) {
-    const res = await this.client.patch('/api/reset-password', {
+  ): Promise<RequestPasswordModification> {
+    const res = await this.client.patch<RequestPasswordModification>('/api/reset-password', {
       email,
       confirmToken,
       newPassword,

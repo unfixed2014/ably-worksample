@@ -1,22 +1,25 @@
 import axios from 'axios';
 
 let cachedClient: IHttpClient | null = null;
+type ReponseType<T> = {
+  data: T;
+};
 
 export interface IHttpClient {
-  get(url: string): Promise<any>;
-  post(url: string, data: any): Promise<any>;
+  get<T>(url: string): Promise<ReponseType<T>>;
+  post<T>(url: string, data: unknown): Promise<ReponseType<T>>;
+  patch<T>(url: string, data: unknown): Promise<ReponseType<T>>;
   setHeader(key: string, value: string): void;
-  patch(url: string, data: any): Promise<any>;
 }
 
 const FakeHttpClient = (): IHttpClient => {
   return {
-    get: (_url: string) => Promise.resolve({ data: {} }),
-    post: (_url: string, _data: any) => Promise.resolve({ data: {} }),
+    get: <T>(_url: string) => Promise.resolve({ data: {} as T }),
+    post: <T>(_url: string, _data: unknown) => Promise.resolve({ data: {} as T }),
+    patch: <T>(_url: string, _data: unknown) => Promise.resolve({ data: {} as T }),
     setHeader: (key: string, value: string) => {
       console.log('setHeader', key, value);
     },
-    patch: (_url: string, _data: any) => Promise.resolve({ data: {} }),
   };
 };
 
@@ -55,11 +58,11 @@ const HttpClient = (): IHttpClient => {
 
   cachedClient = {
     get: (url: string) => axiosClient.get(url),
-    post: (url: string, data: any) => axiosClient.post(url, data),
+    post: (url: string, data: unknown) => axiosClient.post(url, data),
     setHeader: (key: string, value: string) => {
       axiosClient.defaults.headers.common[key] = value;
     },
-    patch: (url: string, data: any) => axiosClient.patch(url, data),
+    patch: (url: string, data: unknown) => axiosClient.patch(url, data),
   };
 
   return cachedClient;
