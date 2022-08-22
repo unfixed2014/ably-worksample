@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
 
 const VerifyCode = () => {
@@ -7,13 +7,20 @@ const VerifyCode = () => {
   const [verifyCode, setVerifyCode] = useState('');
   const { authService } = useDeps();
   const [errorMessage, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!verifyCode) {
+      setError('인증 코드를 입력해주세요.');
+      return;
+    }
+
     try {
       const { email, authCode, issueToken } = state as any;
       const { confirmToken } = await authService.requestVerifyCode(email, authCode, issueToken);
+      navigate('/modify-password', { state: { email, confirmToken } });
     } catch (e: any) {
       setError(e.message);
       console.log(e);
