@@ -29,3 +29,19 @@ test('비밀번호, 비밀번호 확인, 변경하니 버튼이 노출되어야 
   expect(passwordConfimInput).toBeInTheDocument();
   expect(submitBtn).toBeInTheDocument();
 });
+
+test('비밀번호, 비밀번호 확인 input 값이 변경되어야 합니다', async () => {
+  const { user } = renderWithRouter(<ModifyPassword />);
+
+  const passwordInput = screen.getByTestId('passwordInput');
+  const passwordConfirmInput = screen.getByTestId('passwordConfirmInput');
+
+  await user.click(passwordInput);
+  await user.keyboard('12345678');
+
+  await user.click(passwordConfirmInput);
+  await user.keyboard('12345678');
+
+  expect(passwordInput).toHaveValue('12345678');
+  expect(passwordConfirmInput).toHaveValue('12345678');
+});
