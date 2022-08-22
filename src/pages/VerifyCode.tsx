@@ -5,7 +5,7 @@ import { isErrorWithMessage } from '../_lib/Error';
 
 const VerifyCode = () => {
   const { state } = useLocation();
-  const [verifyCode, setVerifyCode] = useState('');
+  const [authCode, setAuthCode] = useState('');
   const { authService } = useDeps();
   const [errorMessage, setError] = useState('');
   const navigate = useNavigate();
@@ -13,15 +13,14 @@ const VerifyCode = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!verifyCode) {
+    if (!authCode) {
       setError('인증 코드를 입력해주세요.');
       return;
     }
 
     try {
-      const { email, authCode, issueToken } = state as {
+      const { email, issueToken } = state as {
         email: string;
-        authCode: string;
         issueToken: string;
       };
       const { confirmToken } = await authService.requestVerifyCode(email, authCode, issueToken);
@@ -63,8 +62,8 @@ const VerifyCode = () => {
                   placeholder="인증 코드를 입력하세요"
                   autoFocus
                   data-testid="verifyCodeInput"
-                  value={verifyCode}
-                  onChange={(e) => setVerifyCode(e.target.value)}
+                  value={authCode}
+                  onChange={(e) => setAuthCode(e.target.value)}
                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>

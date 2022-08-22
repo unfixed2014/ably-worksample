@@ -38,7 +38,7 @@ const VerifyCodeWithDep = (providers = {}) => (
 const defaultInitialEntries = [
   {
     pathname: '/',
-    state: { email: 'ably@ably.com', authCode: '123456', issueToken: '123456' },
+    state: { email: 'ably@ably.com', issueToken: '123456' },
   },
 ];
 
