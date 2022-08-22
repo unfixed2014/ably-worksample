@@ -14,22 +14,23 @@ import ModifyPassword from './pages/ModifyPassword';
 function App() {
   const loggedIn = useState(false);
   return (
-    <div className="App">
+    <div className="App" data-testid="app-wrapper">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Link to="/home">Home</Link>
-        <Routes>
-          <Route path="/" element={loggedIn ? <Navigate replace to="/login" /> : <Home />} />
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/member-info" element={<MemberInfo />} />
-          <Route path="/verify-code" element={<VerifyCode />} />
-          <Route path="/modify-password" element={<ModifyPassword />} />
-          <Route path="*" element={<ErrorPage404 />} />
-        </Routes>
+        {/* <Link to="/home" className="text-3xl font-bold underline">
+          Home
+        </Link> */}
       </header>
+      <Routes>
+        <Route path="/" element={loggedIn ? <Navigate replace to="/login" /> : <Home />} />
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/member-info" element={<MemberInfo />} />
+        <Route path="/verify-code" element={<VerifyCode />} />
+        <Route path="/modify-password" element={<ModifyPassword />} />
+        <Route path="*" element={<ErrorPage404 />} />
+      </Routes>
     </div>
   );
 }
