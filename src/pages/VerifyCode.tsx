@@ -42,13 +42,26 @@ const VerifyCode = () => {
     );
   }
 
+  const padding = (num: number) => {
+    if (num < 10) {
+      return `0${num}`;
+    }
+    return num;
+  };
+
+  const timeInSecond = Number((state as any).remainMillisecond / 1000);
+  const displaySecond = padding(timeInSecond % 60);
+  const displayMinute = padding(timeInSecond / 60);
+
   return (
     <div
       data-testid="verifyCodeWrapper"
       className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-md w-full space-y-8">
-        <p data-testid="counter">00:00</p>
+        <p data-testid="counter">
+          {displayMinute}:{displaySecond}
+        </p>
         {errorMessage && <div data-testid="errorMessage">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className="shadow overflow-hidden sm:rounded-md">
