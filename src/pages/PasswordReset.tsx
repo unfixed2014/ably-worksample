@@ -16,7 +16,13 @@ const PasswordReset = () => {
 
     try {
       const state = await authService.requestEmailVerification(email);
-      navigate('/verify-code', { replace: true, state });
+      navigate('/verify-code', {
+        replace: true,
+        state: {
+          ...state,
+          email,
+        },
+      });
     } catch (err: any) {
       setErrorMessage(err.message);
       console.log(err);
