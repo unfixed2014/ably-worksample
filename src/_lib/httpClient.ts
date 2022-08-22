@@ -6,6 +6,7 @@ export interface IHttpClient {
   get(url: string): Promise<any>;
   post(url: string, data: any): Promise<any>;
   setHeader(key: string, value: string): void;
+  patch(url: string, data: any): Promise<any>;
 }
 
 const FakeHttpClient = (): IHttpClient => {
@@ -15,6 +16,7 @@ const FakeHttpClient = (): IHttpClient => {
     setHeader: (key: string, value: string) => {
       console.log('setHeader', key, value);
     },
+    patch: (_url: string, _data: any) => Promise.resolve({ data: {} }),
   };
 };
 
@@ -57,6 +59,7 @@ const HttpClient = (): IHttpClient => {
     setHeader: (key: string, value: string) => {
       axiosClient.defaults.headers.common[key] = value;
     },
+    patch: (url: string, data: any) => axiosClient.patch(url, data),
   };
 
   return cachedClient;
