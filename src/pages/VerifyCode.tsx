@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
 import { isErrorWithMessage } from '../_lib/Error';
@@ -9,6 +9,26 @@ const VerifyCode = () => {
   const { authService } = useDeps();
   const [errorMessage, setError] = useState('');
   const navigate = useNavigate();
+  const [count, setCount] = useState(0);
+  const savedCallback = useRef<() => void>(() => null);
+  const timerId = useRef<number>(0);
+
+  function callback() {
+    setCount(count + 1);
+  }
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    timerId.current = window.setInterval(tick, 1000);
+    return () => clearInterval(timerId.current);
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -49,9 +69,15 @@ const VerifyCode = () => {
     return num;
   };
 
-  const timeInSecond = Number((state as any).remainMillisecond / 1000);
-  const displaySecond = padding(timeInSecond % 60);
-  const displayMinute = padding(timeInSecond / 60);
+  const timeInSecond = Math.floor((state as any).remainMillisecond) / 1000 - count;
+  const displaySecond = padding(Math.floor(timeInSecond % 60));
+  const displayMinute = padding(Math.floor(timeInSecond / 60));
+
+  console.log(timerId.current);
+
+  if (timeInSecond === 0) {
+    window.clearInterval(timerId.current);
+  }
 
   return (
     <div
