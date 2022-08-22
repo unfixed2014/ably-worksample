@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RequestUserInfoResponse } from '../_lib/AuthServices';
 import { useDeps } from '../_lib/DepContext';
+import { isErrorWithMessage } from '../_lib/Error';
 
 const MemberInfo = () => {
   const { authService, httpClient } = useDeps();
@@ -14,9 +15,8 @@ const MemberInfo = () => {
       try {
         const res = await authService.reqeustUserInfo();
         setMemberInfo(res);
-      } catch (err: any) {
+      } catch (err: unknown) {
         navigate('/login', { replace: true });
-        console.log(err);
       }
     }
 
@@ -28,8 +28,11 @@ const MemberInfo = () => {
       await authService.requestLogout();
       httpClient.setHeader('Authorization', '');
       navigate('/login', { replace: true });
-    } catch (err: any) {
-      setErrorMessage(err.message);
+    } catch (err: unknown) {
+      if (isErrorWithMessage(err)) {
+        setErrorMessage(err.message);
+        return;
+      }
       console.log(err);
     }
   };

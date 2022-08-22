@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
+import { isErrorWithMessage } from '../_lib/Error';
 
 const VerifyCode = () => {
   const { state } = useLocation();
@@ -18,12 +19,19 @@ const VerifyCode = () => {
     }
 
     try {
-      const { email, authCode, issueToken } = state as any;
+      const { email, authCode, issueToken } = state as {
+        email: string;
+        authCode: string;
+        issueToken: string;
+      };
       const { confirmToken } = await authService.requestVerifyCode(email, authCode, issueToken);
       navigate('/modify-password', { state: { email, confirmToken } });
-    } catch (e: any) {
-      setError(e.message);
-      console.log(e);
+    } catch (err) {
+      if (isErrorWithMessage(err)) {
+        setError(err.message);
+        return;
+      }
+      console.log(err);
     }
   };
 

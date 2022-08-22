@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
+import { isErrorWithMessage } from '../_lib/Error';
 
 const ModifyPassword = () => {
   const [password, setPassword] = useState('');
@@ -31,11 +32,15 @@ const ModifyPassword = () => {
     }
 
     try {
-      const { confirmToken, email } = state as any;
+      const { confirmToken, email } = state as { confirmToken: string; email: string };
       await authService.requestPasswordModification(email, confirmToken, password, passwordConfirm);
       setSuccessMessage('비밀번호가 변경되었습니다.');
-    } catch (err: any) {
-      setErrorMessage(err.message);
+    } catch (err: unknown) {
+      if (isErrorWithMessage(err)) {
+        setErrorMessage(err.message);
+        return;
+      }
+      console.log(err);
     }
   };
 

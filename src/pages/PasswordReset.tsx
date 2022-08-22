@@ -1,11 +1,12 @@
 import { FormEvent, useState } from 'react';
 import { useDeps } from '../_lib/DepContext';
 import { useNavigate } from 'react-router-dom';
+import { isErrorWithMessage } from '../_lib/Error';
 
 const PasswordReset = () => {
   const { authService } = useDeps();
   const [email, setEmail] = useState('');
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -23,9 +24,12 @@ const PasswordReset = () => {
           email,
         },
       });
-    } catch (err: any) {
-      setErrorMessage(err.message);
-      console.log(err);
+    } catch (err: unknown) {
+      if (isErrorWithMessage(err)) {
+        setErrorMessage(err.message);
+        return;
+      }
+      return;
     }
   };
 

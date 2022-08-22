@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDeps } from '../_lib/DepContext';
+import { isErrorWithMessage } from '../_lib/Error';
 
 const Login = () => {
   const { authService, httpClient } = useDeps();
@@ -19,8 +20,12 @@ const Login = () => {
       const { accessToken } = await authService.requestLogin({ email, password });
       httpClient.setHeader('Authorization', `Bearer ${accessToken}`);
       navigate('/member-info', { replace: true });
-    } catch (err: any) {
-      setErrorMessage(err.message);
+    } catch (err) {
+      if (isErrorWithMessage(err)) {
+        setErrorMessage(err.message);
+        return;
+      }
+      console.log(err);
     }
   };
 
