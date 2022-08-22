@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { DepsProvider } from './_lib/DepContext';
 import { AuthService } from './_lib/AuthServices';
-import { HttpClient } from './_lib/httpClient';
+import { HttpClient } from './_lib/HttpClient';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

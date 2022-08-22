@@ -1,6 +1,6 @@
 import { createContext, ReactElement, useContext } from 'react';
 import { FakeAuthService, IAuthService } from './AuthServices';
-import { FakeHttpClient, IHttpClient } from './httpClient';
+import { FakeHttpClient, IHttpClient } from './HttpClient';
 interface ServiceProviders {
   authService: IAuthService;
   httpClient: IHttpClient;

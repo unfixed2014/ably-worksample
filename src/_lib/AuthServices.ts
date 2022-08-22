@@ -1,4 +1,4 @@
-import { HttpClient, IHttpClient } from './httpClient';
+import { HttpClient, IHttpClient } from './HttpClient';
 
 export interface RequestLoginResponse {
   accessToken: string;
