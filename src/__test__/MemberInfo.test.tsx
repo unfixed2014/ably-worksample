@@ -61,8 +61,8 @@ describe('GetUserInfo 관련 테스트', () => {
     });
   });
 
-  test('유저 정보를 받아오는대 로그인 페이지로 이동한다', async () => {
-    authService.reqeustUserInfo = jest.fn().mockRejectedValue({ message: 'error', status: 500 });
+  test('유저 정보를 받아오는데 실패하면 로그인 페이지로 이동한다', async () => {
+    authService.reqeustUserInfo = () => Promise.reject({ message: 'error', status: 500 });
 
     renderWithRouter(MemberInfoWithDep({ authService: authService }), {
       initialEntries: ['/member-info'],
@@ -87,20 +87,8 @@ describe('로그아웃 관련 테스트', () => {
     expect(await screen.findByTestId('logoutBtn')).toBeInTheDocument();
   });
 
-  test('로그아웃이 버튼을 클릭했을 경우 로그아웃 요청이 진행되어야 한다', async () => {
-    authService.requestLogout = jest.fn().mockResolvedValue(null);
-
-    const { user } = renderWithRouter(MemberInfoWithDep({ authService: authService }), {
-      initialEntries: ['/member-info'],
-    });
-
-    await user.click(screen.getByTestId('logoutBtn'));
-
-    expect(authService.requestLogout).toBeCalled();
-  });
-
   test('로그아웃이 성공했을 경우 로그인 페이지로 이동해야 한다', async () => {
-    authService.requestLogout = jest.fn().mockResolvedValue(null);
+    authService.requestLogout = () => Promise.resolve();
 
     const { user } = renderWithRouter(MemberInfoWithDep({ authService: authService }), {
       initialEntries: ['/member-info'],
@@ -114,7 +102,7 @@ describe('로그아웃 관련 테스트', () => {
   });
 
   test('로그아웃이 실패했을 경우 에러 메세지를 보여줘야 한다', async () => {
-    authService.requestLogout = jest.fn().mockRejectedValue({ message: '에러', status: 500 });
+    authService.requestLogout = () => Promise.reject({ message: '에러', status: 500 });
 
     const { user } = renderWithRouter(MemberInfoWithDep({ authService: authService }), {
       initialEntries: ['/member-info'],
